@@ -69,14 +69,15 @@ const Signup = () => {
         headers: {
           "Content-Type": "multipart/form-data"
         },
-        withCredentials: true // Ensure this is needed for your use case
+        withCredentials: true
       });
       if (res.data.success) {
-        navigate('/login'); // redirect to login page
+        navigate('/login');
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.error('Network Error:', error); // Log the error for debugging
+      console.error('Network Error:', error);
+      
       toast.error(error?.response?.data?.message || "An error occurred");
     } finally {
       dispatch(setLoading(false));

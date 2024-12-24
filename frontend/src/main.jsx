@@ -9,7 +9,7 @@ import store from './redux/store';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-         <App />
+      <App />
     </Provider>
     <Toaster />
   </StrictMode>
