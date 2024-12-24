@@ -1,6 +1,6 @@
-import React from 'react'
-import Navbar from './shared/Navbar'
-import Job from './job'
+import React from 'react';
+import Navbar from './shared/Navbar';
+import Job from './Job';
 
 const randomJobs = [1, 2, 3];
 
@@ -14,14 +14,14 @@ const Browse = () => {
           {
             randomJobs.map((item, index) => {
               return (
-                <Job />
-              )
+                <Job key={index} />
+              );
             })
           }
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Browse
+export default Browse;

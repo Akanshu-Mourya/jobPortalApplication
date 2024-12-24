@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '@/redux/authSlice';
+import { setLoading, setUser } from '@/redux/authSlice';
 import { Loader2 } from 'lucide-react'; // Assuming you are using lucide-react icons for Loader2
 
 const Login = () => {
@@ -38,6 +38,7 @@ const Login = () => {
         withCredentials: true
       });
       if (res.data.success) {
+        dispatch(setUser(res.data.user)); // Set the user in the redux store
         navigate('/'); // Redirect to the home page after successful login
         toast.success(res.data.message);
       }
