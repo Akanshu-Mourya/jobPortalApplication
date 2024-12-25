@@ -6,7 +6,7 @@ export const register = async (req, resp) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
         // console.log(req.body);
-        
+
         if (!fullname || !email || !phoneNumber || !password || !role) {
 
             return resp.status(400).json({
@@ -125,64 +125,69 @@ export const logout = async (req, resp) => {
 
     }
 }
+
 export const updateProfile = async (req, resp) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
-        const file = req.file;
-        // if (!fullname || !email || !phoneNumber || !bio || !skills) {
-        //     return resp.status(404).json({
-        //         message: "Something is missing",
-        //         success: false
-        //     });
-        // };
+        const file = req.file; // Resume file
+        console.log(req.body);
 
-
-        //cloudinary ayega idhar
-
-        let skillsArray;
+        let skillsArray = [];
         if (skills) {
-            skillsArray = skills.split(",");
+            skillsArray = skills.split(" ");
         }
-        const userId = req.id;//middleware authentication
+
+        const userId = req.id;
         let user = await User.findById(userId);
+
         if (!user) {
             return resp.status(404).json({
                 message: "User not found",
                 success: false
-            })
+            });
         }
-        // updating data
 
-        if (fullname) user.fullname = fullname
-        if (email) user.email = email
-        if (phoneNumber) user.phoneNumber = phoneNumber
-        if (bio) user.bio = bio
-        if (skills) user.skills = skillsArray
+        if (fullname) user.fullname = fullname;
+        if (email) user.email = email;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
 
-        // user.fullname = fullname,
-        //     user.email = email,
-        //     user.phoneNumber = phoneNumber,
-        //     user.profile.bio = bio,
-        //     user.profile.skills = skillsArray
+        if (bio) {
+            if (!user.profile) user.profile = {};
+            user.profile.bio = bio;
+        }
 
-        //resume comes latter here..
+        if (skills) {
+            if (!user.profile) user.profile = {};
+            user.profile.skills = skillsArray;
+        }
+
 
         await user.save();
 
-        user = {
+
+        const updatedUser = {
             _id: user._id,
             fullname: user.fullname,
             email: user.email,
             phoneNumber: user.phoneNumber,
             role: user.role,
+            bio: user.profile?.bio,
+            skills: user.profile?.skills,
             profile: user.profile
-        }
+        };
+        console.log(updatedUser);
+
         return resp.status(200).json({
             message: "Profile updated successfully.",
-            user,
+            user: updatedUser,
             success: true
-        })
-    } catch (error) {
+        });
 
+    } catch (error) {
+        console.error(error);
+        return resp.status(500).json({
+            message: "An error occurred while updating the profile.",
+            success: false,
+        });
     }
-}
+};
