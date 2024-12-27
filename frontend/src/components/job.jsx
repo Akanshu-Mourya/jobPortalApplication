@@ -6,14 +6,13 @@ import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom'
 
 const Job = ({ job }) => {
-    const navigate = useNavigate(); // Correct usage of useNavigate
-    // const jobId = 'asdfghjdfg
-    // hjgfdsadre76rtgf';
+    const navigate = useNavigate(); 
+    // const jobId = 'asdfghjdfghjgfdsadre76rtgf';
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);
         const currentTime = new Date();
         const timeDifference = currentTime - createdAt;
-        return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert ms to days
+        return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     }
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
