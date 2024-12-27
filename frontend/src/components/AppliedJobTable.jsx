@@ -24,7 +24,7 @@ const AppliedJobTable = () => {
                                 <TableCell>Full Stack Developer</TableCell>
                                 <TableCell>Google</TableCell>
                                 <TableCell className='text-right'>
-                                    <Badge className="bg-gray-800 text-white px-5 py-1 rounded-full text-sm cursor-pointer">Selected </Badge></TableCell>
+                                    <Badge className="bg-gray-800 text-white px-5 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-800">Selected </Badge></TableCell>
                             </TableRow>
                         ))
                     }

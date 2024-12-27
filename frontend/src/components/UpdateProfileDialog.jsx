@@ -1,176 +1,155 @@
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog';
-import { Label } from './ui/label';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { Loader2 } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { USER_API_END_POINT } from '@/utils/constant';
-import { setUser } from '@/redux/authSlice';
-import { toast } from 'sonner';
+import React, { useState } from 'react'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
+import { Label } from './ui/label'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
+import { Loader2 } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { USER_API_END_POINT } from '@/utils/constant'
+import { setUser } from '@/redux/authSlice'
+import { toast } from 'sonner'
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
-    // Set loading state
     const [loading, setLoading] = useState(false);
+    const { user } = useSelector(store => store.auth);
 
-    // Get user data from store
-    const { user } = useSelector((store) => store.auth);
-
-    // Set data into input states
     const [input, setInput] = useState({
-        fullname: user?.fullname || '',
-        email: user?.email || '',
-        phoneNumber: user?.phoneNumber || '', // Corrected casing
-        bio: user?.profile?.bio || '',
-        skills: user?.profile?.skills?.join() || '', // Joined array to string for display
-        file: null, // File starts as null
+        fullname: user?.fullname || "",
+        email: user?.email || "",
+        phoneNumber: user?.phoneNumber || "",
+        bio: user?.profile?.bio || "",
+        skills: user?.profile?.skills?.map(skill => skill) || "",
+        file: user?.profile?.resume || ""
     });
-
-    // Get dispatch
     const dispatch = useDispatch();
 
-    // Handle input change
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setInput((prev) => ({ ...prev, [name]: value }));
-    };
+    const changeEventHandler = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value });
+    }
 
-    // Handle file change
-    const handleFileChange = (e) => {
+    const fileChangeHandler = (e) => {
         const file = e.target.files?.[0];
-        setInput((prev) => ({ ...prev, file }));
-    };
+        setInput({ ...input, file })
+    }
 
-    // Handle form submit
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Corrected case
-        setLoading(true);
-
+    const submitHandler = async (e) => {
+        e.preventDefault();
         const formData = new FormData();
-        formData.append('fullname', input.fullname);
-        formData.append('email', input.email);
-        formData.append('phoneNumber', input.phoneNumber);
-        formData.append('bio', input.bio);
-        formData.append('skills', input.skills);
+        formData.append("fullname", input.fullname);
+        formData.append("email", input.email);
+        formData.append("phoneNumber", input.phoneNumber);
+        formData.append("bio", input.bio);
+        formData.append("skills", input.skills);
         if (input.file) {
-            formData.append('resume', input.file);
+            formData.append("file", input.file);
         }
-
         try {
-            const response = await axios.post(`${USER_API_END_POINT}/profile/update`, formData, {
+            setLoading(true);
+            const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data'
                 },
-                withCredentials: true,
+                withCredentials: true
             });
-            if (response.data.success) {
-                console.log(input);
-
-                dispatch(setUser(response.data.user));
-                toast.success(response.data.message);
-
-                setOpen(false); // Close dialog on success
+            if (res.data.success) {
+                dispatch(setUser(res.data.user));
+                toast.success(res.data.message);
             }
         } catch (error) {
-            console.error(error);
-            toast.error(error.response?.data?.message || 'An error occurred');
+            console.log(error);
+            toast.error(error.response.data.message);
         } finally {
-            setLoading(false); // Ensure loading is stopped
+            setLoading(false);
         }
-    };
+        setOpen(false);
+        console.log(input);
+    }
+
+
 
     return (
         <div>
-            <Dialog open={open} className="text-white">
+            <Dialog open={open} className='text-white'>
                 <DialogContent
                     className="bg-white rounded-md sm:max-w-[425px]"
-                    onInteractOutside={() => setOpen(false)} // Ensures the dialog closes on outside click
-                >
+                    onInteractOutside={() => setOpen(false)}>
                     <DialogHeader>
                         <DialogTitle>Update Profile</DialogTitle>
                     </DialogHeader>
-                    <form onSubmit={handleSubmit}>
-                        <div className="grid gap-4 py-4">
+                    <form onSubmit={submitHandler}>
+
+                        <div className='grid gap-4 py-4'>
                             {/* Edit Name */}
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="fullname" className="text-right">
-                                    Name
-                                </Label>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="name" className="text-right">Name</Label>
                                 <Input
-                                    id="fullname"
-                                    name="fullname"
+                                    id="name"
+                                    name="name"
                                     type="text"
                                     value={input.fullname}
-                                    onChange={handleChange}
-                                    className="col-span-3 border-2"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
                                 />
                             </div>
                             {/* Edit Email */}
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="email" className="text-right">
-                                    Email
-                                </Label>
+
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="email" className="text-right">Email</Label>
                                 <Input
                                     id="email"
                                     name="email"
                                     type="email"
                                     value={input.email}
-                                    onChange={handleChange}
-                                    className="col-span-3 border-2"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
                                 />
                             </div>
                             {/* Edit Phone Number */}
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="phoneNumber" className="text-right">
-                                    Phone Number
-                                </Label>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="number" className="text-right">Number</Label>
                                 <Input
-                                    id="phoneNumber"
-                                    name="phoneNumber"
+                                    id="number"
+                                    name="number"
                                     value={input.phoneNumber}
-                                    onChange={handleChange}
-                                    className="col-span-3 border-2"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
                                 />
                             </div>
                             {/* Edit Bio */}
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="bio" className="text-right">
-                                    Bio
-                                </Label>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="bio" className="text-right">Bio</Label>
                                 <Input
                                     id="bio"
                                     name="bio"
                                     value={input.bio}
-                                    onChange={handleChange}
-                                    className="col-span-3 border-2"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
                                 />
                             </div>
                             {/* Edit Skills */}
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="skills" className="text-right">
-                                    Skills
-                                </Label>
+
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="skills" className="text-right">Skills</Label>
                                 <Input
                                     id="skills"
                                     name="skills"
                                     value={input.skills}
-                                    onChange={handleChange}
-                                    className="col-span-3 border-2"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
                                 />
                             </div>
                             {/* Edit Resume */}
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="file" className="text-right">
-                                    Resume
-                                </Label>
+
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="file" className="text-right">Resume</Label>
                                 <Input
                                     id="file"
                                     name="file"
-                                    type="file"
-                                    onChange={handleFileChange}
+                                    type="file" 
                                     accept="application/pdf"
-                                    className="col-span-3 border-2"
+                                    onChange={fileChangeHandler}
+                                    className="col-span-3"
                                 />
                             </div>
                         </div>
@@ -193,7 +172,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 </DialogContent>
             </Dialog>
         </div>
-    );
-};
+    )
+}
 
-export default UpdateProfileDialog;
+export default UpdateProfileDialog
