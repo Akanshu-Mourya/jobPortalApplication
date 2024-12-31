@@ -18,8 +18,10 @@ export const register = async (req, resp) => {
 
         };
         const file = req.file;
+        
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
         const user = await User.findOne({ email });
         if (user) {
             return resp.status(400).json({
@@ -136,7 +138,7 @@ export const logout = async (req, resp) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const { fullname, email, phoneNumber, bio, skills } = req.body;
+        const { fullname, email, phoneNumber, bio, skills,uploadedFile } = req.body;
 
         const file = req.file;
         // cloudinary ayega idhar
@@ -168,7 +170,6 @@ export const updateProfile = async (req, res) => {
             user.profile.resume = cloudResponse.secure_url // save the cloudinary url
             user.profile.resumeOriginalName = file.originalname // Save the original file name
         }
-
 
         await user.save();
 
