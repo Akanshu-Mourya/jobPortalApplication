@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import CompaniesTable from './CompaniesTable'
 import { useNavigate } from 'react-router-dom'
-import useGetAllCompanies from '@/hooks/useGetAllCompanies'
 import { useDispatch } from 'react-redux'
-import { setSearchCompanyByText } from '@/redux/companySlice'
+import AdminJobsTable from './AdminJobsTable'
+import useGetAllAdminJobs from '@/hooks/useGetAllAdminJobs'
+import { setSearchJobByText } from '@/redux/jobSlice'
 
-const Companies = () => {
-    useGetAllCompanies();
+const AdminJobs = () => {
+    useGetAllAdminJobs();
     const [input, setInput] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setSearchCompanyByText(input));
+        dispatch(setSearchJobByText(input));
     }, [input])
     return (
         <div>
@@ -23,17 +23,18 @@ const Companies = () => {
             <div className='max-w-6xl mx-auto my-10'>
                 <div className='flex items-center justify-between mt-32 mb-10'>
                     <Input
-                        className='w-fit  border-2'
-                        placeholder='Filter by name'
+                        className='w-fit p-  border-2'
+                        placeholder='Filter by name,  role'
                         onChange={(e) => setInput(e.target.value)}
                     />
-                    <Button className='bg-gray-800 text-white px-5 py-1 rounded text-sm cursor-pointer hover:bg-gray-800' onClick={() => navigate("/admin/companies/create")}>New Company</Button>
+                    <Button className='bg-gray-800 text-white px-5 py-1 rounded text-sm cursor-pointer hover:bg-gray-800' onClick={() => navigate("/admin/jobs/create")}>New Jobs</Button>
                 </div>
-                <CompaniesTable />
+                <AdminJobsTable />
 
             </div>
         </div>
     )
 }
 
-export default Companies
+export default AdminJobs
+

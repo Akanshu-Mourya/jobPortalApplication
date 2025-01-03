@@ -10,7 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constant';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '@/redux/authSlice';
-import { Loader2 } from 'lucide-react'; // Assuming you are using lucide-react icons for Loader2
+import { Loader2, Eye, EyeOff } from 'lucide-react'; // Assuming you are using lucide-react icons for Loader2
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -18,9 +18,11 @@ const Signup = () => {
     email: "",
     phoneNumber: "",
     password: "",
-    role: "", 
+    role: "",
     file: ""
   });
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
   const [errors, setErrors] = useState({});
   const { loading } = useSelector(store => store.auth);
   const dispatch = useDispatch();
@@ -77,7 +79,7 @@ const Signup = () => {
       }
     } catch (error) {
       console.error('Network Error:', error);
-      
+
       toast.error(error?.response?.data?.message || "An error occurred");
     } finally {
       dispatch(setLoading(false));
@@ -136,17 +138,25 @@ const Signup = () => {
           </div>
 
           {/* Password */}
-          <div className='my-2'>
+          <div className='my-2 relative'>
             <Label className='font-bold'>Password</Label>
             <Input
-              type="password"
+              type={showPassword ? 'text' : 'password'} // Toggle password visibility
               value={input.password}
               name="password"
               onChange={changeEventHandler}
               placeholder="Enter a Password"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
+              required
             />
-            {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+            {/* Toggle Eye Icon */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 mt-3"
+            >
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            </button>
           </div>
 
           {/* Role Selection */}

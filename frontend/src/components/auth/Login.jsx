@@ -10,7 +10,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setUser } from '@/redux/authSlice';
-import { Loader2 } from 'lucide-react'; // Assuming you are using lucide-react icons for Loader2
+import { Loader2, Eye, EyeOff } from 'lucide-react'; // Added Eye and EyeOff icons
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -18,6 +18,7 @@ const Login = () => {
     password: "",
     role: "",
   });
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const { loading } = useSelector(store => store.auth);
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    try { 
+    try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
@@ -74,10 +75,10 @@ const Login = () => {
           </div>
 
           {/* Password */}
-          <div className='my-2'>
+          <div className='my-2 relative'>
             <Label className='font-bold'>Password</Label>
             <Input
-              type="password"
+              type={showPassword ? 'text' : 'password'} // Toggle password visibility
               value={input.password}
               name="password"
               onChange={changeEventHandler}
@@ -85,6 +86,14 @@ const Login = () => {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
               required
             />
+            {/* Toggle Eye Icon */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 mt-3"
+            >
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            </button>
           </div>
 
           {/* Role Selection */}

@@ -4,13 +4,24 @@ import { Avatar, AvatarImage } from '../ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Edit2, MoreHorizontal } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const CompaniesTable = () => {
-    const { companies = [] } = useSelector(store => store.company); // Default to an empty array if companies is undefined
-    const [filterCompany, setFilterCompany] = useState();
-    useEffect(() => {
+    const { companies = [], searchCompanyByText } = useSelector(store => store.company); // Default to an empty array if companies is undefined
+    const [filterCompany, setFilterCompany] = useState([]); // Initialize as an empty array
+    const navigate = useNavigate();
 
-    })
+    useEffect(() => {
+        const filteredCompany =
+            companies.length >= 0 &&
+            companies.filter((company) => {
+                if (!searchCompanyByText) {
+                    return true;
+                }
+                return company?.name?.toLowerCase().includes(searchCompanyByText.toLowerCase());
+            });
+        setFilterCompany(filteredCompany || []); // Ensure it's always an array
+    }, [companies, searchCompanyByText]);
 
     return (
         <div>
@@ -25,14 +36,14 @@ const CompaniesTable = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {companies.length === 0 ? (
+                    {filterCompany.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan="4" className="text-center">
                                 You haven't registered any company yet
                             </TableCell>
                         </TableRow>
                     ) : (
-                        companies.map((company) => (
+                        filterCompany.map((company) => (
                             <TableRow key={company._id}>
                                 <TableCell>
                                     <Avatar>
@@ -43,14 +54,14 @@ const CompaniesTable = () => {
                                     </Avatar>
                                 </TableCell>
                                 <TableCell>{company.name}</TableCell>
-                                <TableCell>{new Date(company.createdAt).toLocaleDateString()}</TableCell>
+                                <TableCell>{new Date(company.createdAt).toLocaleDateString('en-GB')}</TableCell> 
                                 <TableCell className="text-right">
                                     <Popover>
                                         <PopoverTrigger>
                                             <MoreHorizontal />
                                         </PopoverTrigger>
                                         <PopoverContent className="w-32">
-                                            <div className="flex items-center gap-2 cursor-pointer">
+                                            <div onClick={() => navigate(`/admin/companies/${company._id}`)} className="flex items-center gap-2 cursor-pointer">
                                                 <Edit2 className="w-4" />
                                                 <span>Edit</span>
                                             </div>

@@ -7,7 +7,6 @@ import cloudinary from "../utils/cloudinary.js";
 export const register = async (req, resp) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
-        // console.log(req.body);
 
         if (!fullname || !email || !phoneNumber || !password || !role) {
 
@@ -18,7 +17,15 @@ export const register = async (req, resp) => {
 
         };
         const file = req.file;
-        
+
+        // phone number validation
+        const phoneRegex = /^[6-9][0-9]{9}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+            return resp.status(400).json({
+                message: "Please Enter a valid phone number",
+                success: false,
+            });
+        };
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
@@ -138,7 +145,7 @@ export const logout = async (req, resp) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const { fullname, email, phoneNumber, bio, skills,uploadedFile } = req.body;
+        const { fullname, email, phoneNumber, bio, skills, uploadedFile } = req.body;
 
         const file = req.file;
         // cloudinary ayega idhar
@@ -181,7 +188,7 @@ export const updateProfile = async (req, res) => {
             role: user.role,
             profile: user.profile
         }
-       
+
 
         return res.status(200).json({
             message: "Profile updated successfully..",
