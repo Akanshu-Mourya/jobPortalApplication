@@ -63,8 +63,6 @@ export const register = async (req, resp) => {
 export const login = async (req, resp) => {
     try {
         const { email, password, role } = req.body;
-        // console.log(req.body);
-
         if (!email || !password || !role) {
             return resp.status(400).json({
                 message: "Something is missing",
