@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../shared/Navbar';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
@@ -20,7 +20,7 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
-  const { loading } = useSelector(store => store.auth);
+  const { loading, user } = useSelector(store => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,6 +51,11 @@ const Login = () => {
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  })
   return (
     <div>
       <Navbar />

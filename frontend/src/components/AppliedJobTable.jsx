@@ -38,5 +38,3 @@ const AppliedJobTable = () => {
 
 export default AppliedJobTable 
 
-
-//13:01:43
