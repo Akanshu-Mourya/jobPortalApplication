@@ -143,57 +143,57 @@ export const logout = async (req, resp) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const { fullname, email, phoneNumber, bio, skills, uploadedFile } = req.body;
-
-        const file = req.file;
-        // cloudinary ayega idhar
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        const { fullname, email, phoneNumber, bio, skills, uploadedFile, resumeOriginalName } = req.body;
 
         let skillsArray;
         if (skills) {
-            skillsArray = skills.split(" ");
+            skillsArray = skills.split(",").map(skill => skill.trim());
         }
-        const userId = req.id; // middleware authentication
+
+        const userId = req.id;
         let user = await User.findById(userId);
 
         if (!user) {
             return res.status(400).json({
                 message: "User not found.",
                 success: false
-            })
-        }
-        // updating data
-        if (fullname) user.fullname = fullname
-        if (email) user.email = email
-        if (phoneNumber) user.phoneNumber = phoneNumber
-        if (bio) user.profile.bio = bio
-        if (skills) user.profile.skills = skillsArray
-
-        // resume comes later here...
-        if (cloudResponse) {
-            user.profile.resume = cloudResponse.secure_url // save the cloudinary url
-            user.profile.resumeOriginalName = file.originalname // Save the original file name
+            });
         }
 
+        if (fullname) user.fullname = fullname;
+        if (email) user.email = email;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+        if (bio) user.profile.bio = bio;
+        if (skills) user.profile.skills = skillsArray;
+
+        if (uploadedFile) {
+            user.profile.resume = uploadedFile;
+        }
+
+        if (resumeOriginalName) {
+            user.profile.resumeOriginalName = resumeOriginalName;
+        }
         await user.save();
 
-        user = {
+        const updatedUser = {
             _id: user._id,
             fullname: user.fullname,
             email: user.email,
             phoneNumber: user.phoneNumber,
             role: user.role,
             profile: user.profile
-        }
-
+        };
 
         return res.status(200).json({
-            message: "Profile updated successfully..",
-            user,
+            message: "Profile updated successfully.",
+            user: updatedUser,
             success: true
-        })
+        });
     } catch (error) {
-        console.log(error);
+        console.error("Error updating profile:", error);
+        return res.status(500).json({
+            message: "Internal server error.",
+            success: false
+        });
     }
-}
+};

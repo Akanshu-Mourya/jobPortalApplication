@@ -14,7 +14,7 @@ const ApplicantsTable = () => {
 
     const statusHandler = async (status, id) => {
         try {
-            axios.defaults.withCredentials=true;
+            axios.defaults.withCredentials = true;
             const res = await axios.post(`${APPLICATION_API_END_POINT}/status/${id}/update`, { status }, {
                 withCredentials: true
             });
@@ -50,7 +50,7 @@ const ApplicantsTable = () => {
                                     <TableCell >
                                         {
                                             item?.applicant?.profile?.resume ?
-                                                <a className='text-blue-600 cursor-pointer' href={item?.applicant?.profile?.resume} target='_blank' rel='noopener noreferrer'>
+                                                <a className='text-blue-600 cursor-pointer ' href={item?.applicant?.profile?.resume} target='_blank' rel='noopener noreferrer'>
                                                     {item?.applicant?.profile?.resumeOriginalName}
                                                 </a> : <span>Not Uploaded</span>
                                         }
