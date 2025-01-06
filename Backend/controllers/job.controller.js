@@ -33,7 +33,6 @@ export const postJob = async (req, resp) => {
 
     }
 }
-
 // student ke liye
 export const getAlljobs = async (req, resp) => {
     try {

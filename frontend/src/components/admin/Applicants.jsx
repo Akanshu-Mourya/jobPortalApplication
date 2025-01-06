@@ -37,5 +37,3 @@ const Applicants = () => {
 };
 
 export default Applicants;
-
-//12:06
