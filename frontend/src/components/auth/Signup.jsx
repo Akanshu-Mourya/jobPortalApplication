@@ -79,24 +79,25 @@ const Signup = () => {
       }
     } catch (error) {
       console.error('Network Error:', error);
-
       toast.error(error?.response?.data?.message || "An error occurred");
     } finally {
       dispatch(setLoading(false));
     }
   }
+
   useEffect(() => {
     if (user) {
       navigate("/");
     }
-  })
+  }, [user, navigate]);
+
   return (
     <div>
       <Navbar />
-      <div className='flex items-center justify-center max-w-7xl mx-auto'>
+      <div className='flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <form
           onSubmit={submitHandler}
-          className='w-full lg:w-1/2 border border-gray-200 rounded-md p-6 my-10'>
+          className='w-full sm:w-4/5 md:w-3/4 lg:w-1/2 border border-gray-200 rounded-md p-6 my-10'>
           <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
 
           {/* Full Name */}
@@ -110,7 +111,7 @@ const Signup = () => {
               placeholder="Enter a Full Name"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
             />
-            {errors.fullname && <span className="text-red-500 text-sm">{errors.fullname}</span>}
+            {errors.fullname && <span className="text-red-500 text-sm mt-1">{errors.fullname}</span>}
           </div>
 
           {/* Email */}
@@ -122,9 +123,9 @@ const Signup = () => {
               name="email"
               onChange={changeEventHandler}
               placeholder="Enter an Email"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6 A38C2]"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
             />
-            {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+            {errors.email && <span className="text-red-500 text-sm mt-1">{errors.email}</span>}
           </div>
 
           {/* Phone Number */}
@@ -138,7 +139,7 @@ const Signup = () => {
               placeholder="Enter a Phone Number"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
             />
-            {errors.phoneNumber && <span className="text-red-500 text-sm">{errors.phoneNumber}</span>}
+            {errors.phoneNumber && <span className="text-red-500 text-sm mt-1">{errors.phoneNumber}</span>}
           </div>
 
           {/* Password */}
@@ -151,7 +152,6 @@ const Signup = () => {
               onChange={changeEventHandler}
               placeholder="Enter a Password"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
-              required
             />
             {/* Toggle Eye Icon */}
             <button
@@ -161,11 +161,12 @@ const Signup = () => {
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
+            {errors.password && <span className="text-red-500 text-sm mt-1">{errors.password}</span>}
           </div>
 
           {/* Role Selection */}
-          <div className='flex items-center justify-between'>
-            <RadioGroup className='flex items-center gap-4 my-5'>
+          <div className='my-5'>
+            <RadioGroup className='flex items-center gap-4'>
               <div className="flex items-center space-x-2">
                 <Input
                   id="student"
@@ -191,11 +192,11 @@ const Signup = () => {
                 <Label htmlFor="recruiter">Recruiter</Label>
               </div>
             </RadioGroup>
-            {errors.role && <span className="text-red-500 text-sm">{errors.role}</span>}
+            {errors.role && <span className="text-red-500 text-sm mt-1">{errors.role}</span>}
           </div>
 
           {/* Profile Picture Upload */}
-          <div className='flex items-center gap-2'>
+          <div className='my-5'>
             <Label htmlFor="profile" className="font-bold">Profile</Label>
             <Input
               id="profile"
@@ -211,7 +212,7 @@ const Signup = () => {
             loading ? (
               <Button className='w-full my-4 bg-black text-white hover:bg-black focus:bg-black active:bg-black '>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Please wait
+                Please wait...
               </Button>
             ) : (
               <Button

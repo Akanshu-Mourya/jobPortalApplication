@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
 const JobDescription = () => {
-
     const { user } = useSelector(store => store.auth)
     const { singleJob } = useSelector(store => store.job);
 
@@ -51,38 +50,49 @@ const JobDescription = () => {
         }
         fetchSingleJob();
     }, [jobId, dispatch, user?._id])
+
     return (
         <div className='max-w-7xl mx-auto my-10'>
-            <div className='flex items-center justify-between'>
-                <div>
-                    <h1 className='font-bold text-xl '>{singleJob?.title}</h1>
+            <div className='flex flex-col md:flex-row items-center justify-between gap-5'>
+                {/* Job Details */}
+                <div className='flex flex-col md:flex-1'>
+                    <h1 className='font-bold text-xl'>{singleJob?.title}</h1>
                     <div className='flex items-center gap-2 mt-5'>
                         <Badge className={'text-[#6A38C2] font-bold'} variant='ghost'>{singleJob?.position} Positions</Badge>
                         <Badge className={'text-[#F83002] font-bold'} variant='ghost'>{singleJob?.jobType}</Badge>
                         <Badge className={'text-[#7209b7] font-bold'} variant='ghost'>{singleJob?.salary}LPA</Badge>
                     </div>
                 </div>
-                <Button
-                    onClick={isApplied ? null : applyJobHandler}
-                    disabled={isApplied}
-                    className={` px-5 py-7 rounded-md text-sm cursor-pointer text-white ${isApplied ? 'bg-gray-600 cursor-not-allowed  hover:bg-black hover:text-white' : 'bg-[#7209b7] hover:bg-[#5f32ad]'}`}>
-                    {isApplied ? 'Already Applied' : 'Apply Now'}
-                </Button>
+                
+                {/* Apply Button */}
+                <div className='mt-5 md:mt-0'>
+                    <Button
+                        onClick={isApplied ? null : applyJobHandler}
+                        disabled={isApplied}
+                        className={`px-5 py-3 rounded-md text-sm cursor-pointer text-white ${isApplied ? 'bg-gray-600 cursor-not-allowed hover:bg-black' : 'bg-[#7209b7] hover:bg-[#5f32ad]'}`}
+                    >
+                        {isApplied ? 'Already Applied' : 'Apply Now'}
+                    </Button>
+                </div>
             </div>
-            <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>
-            <div className='my-4'>
-                <h1 className='font-bold my-1'>Role: <span className='pl-4 font-normal text-gray-800'>{singleJob?.title}</span></h1>
-                <h1 className='font-bold my-1'>Location: <span className='pl-4 font-normal text-gray-800'>{singleJob?.location}</span></h1>
-                <h1 className='font-bold my-1'>Description: <span className='pl-4 font-normal text-gray-800'>{singleJob?.description}</span></h1>
-                <h1 className='font-bold my-1'>Experience: <span className='pl-4 font-normal text-gray-800'>{singleJob?.exprienceLevel} yrs</span></h1>
-                <h1 className='font-bold my-1'>Salary: <span className='pl-4 font-normal text-gray-800'>{singleJob?.salary} LPA</span></h1>
-                <h1 className='font-bold my-1'>Total Applicants: <span className='pl-4 font-normal text-gray-800'>{singleJob?.applications?.length}</span></h1>
-                <h1 className='font-bold my-1'>Posted Date: <span className='pl-4 font-normal text-gray-800'>{singleJob?.createdAt.split("T")[0]}</span></h1>
 
+            <h1 className='border-b-2 border-b-gray-300 font-medium py-4 mt-8'>Job Description</h1>
+            <div className='my-4 grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <div>
+                    <h1 className='font-bold my-1'>Role: <span className='pl-4 font-normal text-gray-800'>{singleJob?.title}</span></h1>
+                    <h1 className='font-bold my-1'>Location: <span className='pl-4 font-normal text-gray-800'>{singleJob?.location}</span></h1>
+                    <h1 className='font-bold my-1'>Description: <span className='pl-4 font-normal text-gray-800'>{singleJob?.description}</span></h1>
+                    <h1 className='font-bold my-1'>Experience: <span className='pl-4 font-normal text-gray-800'>{singleJob?.exprienceLevel} yrs</span></h1>
+                </div>
+
+                <div>
+                    <h1 className='font-bold my-1'>Salary: <span className='pl-4 font-normal text-gray-800'>{singleJob?.salary} LPA</span></h1>
+                    <h1 className='font-bold my-1'>Total Applicants: <span className='pl-4 font-normal text-gray-800'>{singleJob?.applications?.length}</span></h1>
+                    <h1 className='font-bold my-1'>Posted Date: <span className='pl-4 font-normal text-gray-800'>{singleJob?.createdAt.split("T")[0]}</span></h1>
+                </div>
             </div>
         </div>
     )
 }
 
-export default JobDescription
-
+export default JobDescription;

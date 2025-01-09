@@ -6,7 +6,7 @@ const Footer = () => {
         <footer className="bg-gray-900 text-white py-10 mt-36">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Footer Top Section */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {/* About Us */}
                     <div>
                         <h2 className="text-lg font-semibold mb-4">About Job Hunt</h2>
@@ -48,6 +48,7 @@ const Footer = () => {
                     </div>
                 </div>
 
+                {/* Footer Bottom Section */}
                 <div className="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
                     <p>&copy; 2024 Job Hunt. All rights reserved.</p>
                     <p>Designed and developed by Akanshu Mourya.</p>

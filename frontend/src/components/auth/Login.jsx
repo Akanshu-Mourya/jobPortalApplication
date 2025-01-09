@@ -53,17 +53,18 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/"); // Redirect to home if the user is already logged in
     }
-  })
+  }, [user, navigate]);
+
   return (
     <div>
       <Navbar />
-      <div className='flex items-center justify-center max-w-7xl mx-auto'>
+      <div className='flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <form
           onSubmit={submitHandler}
-          className='w-full lg:w-1/2 border border-gray-200 rounded-md p-6 my-10'>
-          <h1 className='font-bold text-xl mb-5'>Login</h1>
+          className='w-full sm:w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/3 border border-gray-200 rounded-md p-6 my-10'>
+          <h1 className='font-bold text-xl mb-5 text-center'>Login</h1>
 
           {/* Email */}
           <div className='my-2'>
