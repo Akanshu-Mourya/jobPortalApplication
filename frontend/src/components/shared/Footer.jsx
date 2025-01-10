@@ -19,9 +19,9 @@ const Footer = () => {
                     <div>
                         <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="/jobs" className="hover:text-gray-300">Browse Jobs</a></li>
-                            <li><a href="/companies" className="hover:text-gray-300">Top Companies</a></li>
-                            <li><a href="/blog" className="hover:text-gray-300">Career Advice</a></li>
+                            <li><a href="/" className="hover:text-gray-300">Home</a></li>
+                            <li><a href="/browse" className="hover:text-gray-300">Browse Jobs</a></li>
+                            <li><a href="/jobs" className="hover:text-gray-300">Apply Jobs</a></li>
                             <li><a href="/contact" className="hover:text-gray-300">Contact Us</a></li>
                         </ul>
                     </div>

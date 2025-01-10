@@ -49,9 +49,8 @@ const Navbar = () => {
 
                 {/* Navigation Links */}
                 <div
-                    className={`${
-                        menuOpen ? 'block' : 'hidden'
-                    } absolute md:relative top-16 left-0 md:top-0 md:left-0 w-full md:w-auto bg-white md:bg-transparent md:flex items-center gap-8 py-4 md:py-0 px-4 md:px-0`}
+                    className={`${menuOpen ? 'block' : 'hidden'
+                        } absolute md:relative top-16 left-0 md:top-0 md:left-0 w-full md:w-auto bg-white md:bg-transparent md:flex items-center gap-8 py-4 md:py-0 px-4 md:px-0`}
                 >
                     <ul className="flex flex-col md:flex-row font-medium items-center gap-5">
                         {user && user.role === 'recruiter' ? (
@@ -68,12 +67,16 @@ const Navbar = () => {
                                 <li>
                                     <Link to="/">Home</Link>
                                 </li>
+                                {/* <li>
+                                    <Link to="/Topcompanies">Companies</Link>
+                                </li> */}
                                 <li>
                                     <Link to="/jobs">Jobs</Link>
                                 </li>
                                 <li>
                                     <Link to="/browse">Browse</Link>
                                 </li>
+
                             </>
                         )}
                     </ul>

@@ -24,28 +24,28 @@ const CompaniesTable = () => {
     }, [companies, searchCompanyByText]);
 
     return (
-        <div>
-            <Table>
+        <div className="overflow-x-auto">
+            <Table className="min-w-full">
                 <TableCaption>A list of your recent registered companies</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Logo</TableHead>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className="px-4 py-2">Logo</TableHead>
+                        <TableHead className="px-4 py-2">Name</TableHead>
+                        <TableHead className="px-4 py-2">Date</TableHead>
+                        <TableHead className="px-4 py-2 text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {filterCompany.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan="4" className="text-center">
+                            <TableCell colSpan="4" className="text-center py-4">
                                 You haven't registered any company yet
                             </TableCell>
                         </TableRow>
                     ) : (
                         filterCompany.map((company) => (
-                            <TableRow key={company._id}>
-                                <TableCell>
+                            <TableRow key={company._id} className="border-t">
+                                <TableCell className="px-4 py-2">
                                     <Avatar>
                                         <AvatarImage
                                             src={company.logo || 'https://via.placeholder.com/50'}
@@ -53,9 +53,9 @@ const CompaniesTable = () => {
                                         />
                                     </Avatar>
                                 </TableCell>
-                                <TableCell>{company.name}</TableCell>
-                                <TableCell>{new Date(company.createdAt).toLocaleDateString('en-GB')}</TableCell> 
-                                <TableCell className="text-right">
+                                <TableCell className="px-4 py-2">{company.name}</TableCell>
+                                <TableCell className="px-4 py-2">{new Date(company.createdAt).toLocaleDateString('en-GB')}</TableCell> 
+                                <TableCell className="px-4 py-2 text-right">
                                     <Popover>
                                         <PopoverTrigger>
                                             <MoreHorizontal />

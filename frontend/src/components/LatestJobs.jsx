@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 
 const LatestJobs = () => {
     const { allJobs } = useSelector(store => store.job);
-
     return (
         <div className='max-w-7xl mx-auto my-20'>
             <h1 className='text-4xl font-bold'>
@@ -19,7 +18,7 @@ const LatestJobs = () => {
                                 initial={{ opacity: 0, x: 100 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -100 }}
-                                transition={{ duration: 0.4 }}  
+                                transition={{ duration: 0.4 }}
                                 key={job._id}
                             >
                                 <LatestJobCards job={job} />
@@ -32,3 +31,5 @@ const LatestJobs = () => {
 }
 
 export default LatestJobs;
+
+

@@ -25,11 +25,13 @@ const CategoryCarousel = () => {
     };
 
     return (
-        <div className="relative">
-            <Carousel className="w-full max-w-4xl mx-auto my-20">
+        <div className="relative overflow-hidden">
+            <Carousel className="w-full max-w-4xl mx-auto my-20 px-4 md:px-0">
                 <CarouselContent>
                     {category.map((cat, index) => (
-                        <CarouselItem key={index} className="flex justify-center items-center md:basis-1/2 lg:basis-1/3 p-1">
+                        <CarouselItem
+                            key={index}
+                            className="flex justify-center items-center md:basis-1/2 lg:basis-1/3 p-1">
                             <Button
                                 onClick={() => searchJobHandler(cat)}
                                 variant="black"
@@ -39,11 +41,11 @@ const CategoryCarousel = () => {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-
-                {/* Navigation Buttons */}
-                <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 transform -translate-y-1/2">
-                    <CarouselPrevious className="text-gray-800 hover:text-[#6A38C2] transition-colors duration-300" />
-                    <CarouselNext className="text-gray-800 hover:text-[#6A38C2] transition-colors duration-300" />
+                <div>
+                    <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 md:px-8 transform -translate-y-1/2">
+                        <CarouselPrevious className="text-gray-800 hover:text-[#6A38C2] transition-colors duration-300 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-lg md:-left-12 lg:-left-16" />
+                        <CarouselNext className="text-gray-800 hover:text-[#6A38C2] transition-colors duration-300 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-lg md:-right-12 lg:-right-16" />
+                    </div>
                 </div>
             </Carousel>
         </div>
