@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Button } from './ui/button'
 import { Bookmark } from 'lucide-react'
@@ -6,7 +7,7 @@ import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom'
 
 const Job = ({ job }) => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     // const jobId = 'asdfghjdfghjgfdsadre76rtgf';
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);

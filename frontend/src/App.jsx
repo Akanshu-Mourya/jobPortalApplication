@@ -42,10 +42,10 @@ const appRouter = createBrowserRouter([
     path: "/browse",
     element: <Browse />
   },
-  // {
-  //   path: "/Topcompanies",
-  //   element: <TopCompanies />
-  // },
+  {
+    path: "/Topcompanies",
+    element: <TopCompanies />
+  },
   {
     path: "/profile",
     element: <Profile />

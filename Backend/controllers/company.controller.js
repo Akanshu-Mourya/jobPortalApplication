@@ -105,3 +105,25 @@ export const updateCompany = async (req, resp) => {
 
     }
 }
+
+export const getAllCompanies = async (req, resp) => {
+    try {
+        const companies = await Company.find();
+        if (!companies || companies.length === 0) {
+            return resp.status(404).json({
+                message: "No companies found.",
+                success: false,
+            });
+        }
+        return resp.status(200).json({
+            companies,
+            success: true,
+        });
+    } catch (error) {
+        console.error(error);
+        return resp.status(500).json({
+            message: "Internal server error while fetching companies.",
+            success: false,
+        });
+    }
+};

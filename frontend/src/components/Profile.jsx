@@ -80,13 +80,11 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Applied Jobs Section */}
       <div className="max-w-4xl mx-auto bg-white rounded-2xl p-8 my-10">
         <h1 className="font-bold text-lg my-5">Applied Jobs</h1>
         <AppliedJobTable />
       </div>
 
-      {/* Update Profile Dialog */}
       <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );
