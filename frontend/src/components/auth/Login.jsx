@@ -39,12 +39,12 @@ const Login = () => {
         withCredentials: true
       });
       if (res.data.success) {
-        dispatch(setUser(res.data.user)); // Set the user in the redux store
-        navigate('/'); // Redirect to the home page after successful login
+        dispatch(setUser(res.data.user));
+        navigate('/'); 
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.error('Login Error:', error); // Log the error for debugging
+      console.error('Login Error:', error);
       toast.error(error.response?.data?.message || "An error occurred during login");
     } finally {
       dispatch(setLoading(false));
@@ -53,7 +53,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/"); // Redirect to home if the user is already logged in
+      navigate("/"); 
     }
   }, [user, navigate]);
 
@@ -63,7 +63,7 @@ const Login = () => {
       <div className='flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <form
           onSubmit={submitHandler}
-          className='w-full sm:w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/3 border border-gray-200 rounded-md p-6 my-10'>
+          className='w-full sm:w-4/5 md:w-3/4 lg:w-1/2 border border-gray-200 rounded-md p-6 my-10'>
           <h1 className='font-bold text-xl mb-5 text-center'>Login</h1>
 
           {/* Email */}
@@ -81,10 +81,10 @@ const Login = () => {
           </div>
 
           {/* Password */}
-          <div className='my-2 relative'>
+          <div className='my-2'>
             <Label className='font-bold'>Password</Label>
             <Input
-              type={showPassword ? 'text' : 'password'} // Toggle password visibility
+              type={showPassword ? 'text' : 'password'}
               value={input.password}
               name="password"
               onChange={changeEventHandler}

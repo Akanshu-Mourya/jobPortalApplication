@@ -10,7 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constant';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '@/redux/authSlice';
-import { Loader2, Eye, EyeOff } from 'lucide-react'; // Assuming you are using lucide-react icons for Loader2
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -21,7 +21,7 @@ const Signup = () => {
     role: "",
     file: ""
   });
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const [errors, setErrors] = useState({});
   const { loading, user } = useSelector(store => store.auth);
@@ -98,7 +98,7 @@ const Signup = () => {
         <form
           onSubmit={submitHandler}
           className='w-full sm:w-4/5 md:w-3/4 lg:w-1/2 border border-gray-200 rounded-md p-6 my-10'>
-          <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
+          <h1 className='font-bold text-xl mb-5 text-center'>Sign Up</h1>
 
           {/* Full Name */}
           <div className='my-2'>

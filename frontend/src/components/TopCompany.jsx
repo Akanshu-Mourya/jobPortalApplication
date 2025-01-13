@@ -25,7 +25,8 @@ const TopCompany = ({ company }) => {
                         Visit Site
                     </Button>
                     <Button className='bg-[#6A38C2] text-white hover:bg-black'>
-                        View  Jobs
+                        {/* <a href="https://www.capgemini.com/careers/join-capgemini/job-search/?size=15">View Jobs</a> */}
+                        View Jobs
                     </Button>
                 </div>
             </div>

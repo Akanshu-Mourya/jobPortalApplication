@@ -7,19 +7,22 @@ import { motion } from "framer-motion";
 
 const TopCompanies = () => {
     // const dispatch = useDispatch();
-    const { allCompany, searchedQuery } = useSelector(store => store.company);
-    const [FilterCompany, setFilterCompany] = useState(allCompany);
+    const { companies = [], searchedQuery } = useSelector(store => store.company);
+    const [FilterCompany, setFilterCompany] = useState(companies);
 
     useEffect(() => {
         if (searchedQuery) {
-            const filteredCompany = allCompany.filter((company) => {
-                return company.name.toLowerCase().includes(searchedQuery.toLowerCase())
+            const filteredCompany = companies.filter((company) => {
+                return company.name.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+                    company.location.toLowerCase().includes(searchedQuery.toLowerCase())
             });
             setFilterCompany(filteredCompany);
         } else {
-            setFilterCompany(allCompany);
+            console.log(companies);
+
+            setFilterCompany(companies);
         }
-    }, [allCompany, searchedQuery]);
+    }, [companies, searchedQuery]);
 
     return (
         <div>
@@ -34,7 +37,7 @@ const TopCompanies = () => {
                             <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                                     {
-                                        FilterCompany.map((company) => (
+                                        FilterCompany?.map((company) => (
                                             <motion.div
                                                 initial={{ opacity: 0, x: 100 }}
                                                 animate={{ opacity: 1, x: 0 }}

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import { Label } from './ui/label'
-import { setSearchedQuery } from '@/redux/jobSlice'
+import { setSearchedQuery } from '@/redux/companySlice'
 import { useDispatch } from 'react-redux'
 
 const fitlerData = [
     {
         fitlerType: "Company",
         array: ["Microsoft", "Google", "Juspay", "Jio", "FilpKart"]
+    },{
+        fitlerType:"Location",
+        array:["Banglore","Indore","Navi Mumbai",]
     }
 ]
 
