@@ -108,3 +108,29 @@ export const getAdminJobs = async (req, resp) => {
 
     }
 }
+export const getJobsByCompanyById = async (req, resp) => {
+    try {
+        const companyId = req.params.id;
+        // console.log(companyId);
+
+        const jobs = await Job.find({ company: companyId });
+
+        if (!jobs || jobs.length === 0) {
+            return resp.status(404).json({
+                message: "Jobs not found for the given company",
+                success: false,
+            });
+        }
+
+        return resp.status(200).json({
+            jobs,
+            success: true,
+        });
+    } catch (error) {
+        console.error(error);
+        return resp.status(500).json({
+            message: "Internal Server Error",
+            success: false,
+        });
+    }
+};

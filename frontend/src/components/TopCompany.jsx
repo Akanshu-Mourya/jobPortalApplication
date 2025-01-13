@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 const TopCompany = ({ company }) => {
+    const navigate = useNavigate();
     return (
         <div className="p-4 rounded-lg shadow-md bg-white border border-gray-200">
             <div className="flex items-center gap-4">
@@ -24,8 +26,9 @@ const TopCompany = ({ company }) => {
                     <Button className='hover:bg-slate-100'>
                         Visit Site
                     </Button>
-                    <Button className='bg-[#6A38C2] text-white hover:bg-black'>
-                        {/* <a href="https://www.capgemini.com/careers/join-capgemini/job-search/?size=15">View Jobs</a> */}
+                    <Button
+                        onClick={() => navigate(`/getJobByCompany/${company?._id}?name=${company?.name}&logo=${encodeURIComponent(company?.logo)}`)}
+                        className='bg-[#6A38C2] text-white hover:bg-black'>
                         View Jobs
                     </Button>
                 </div>

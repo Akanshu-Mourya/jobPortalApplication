@@ -15,6 +15,7 @@ import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import TopCompanies from './components/TopCompanies'
+import JobList from './components/JobLIst'
 
 
 const appRouter = createBrowserRouter([
@@ -49,6 +50,9 @@ const appRouter = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />
+  }, {
+    path: "/getJobByCompany/:companyId",
+    element: <JobList /> // Add your JobList component here
   },
   // admin ke liye yha se start hoga
   {
