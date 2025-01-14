@@ -1,24 +1,56 @@
+import React, { useState } from 'react';
+import { Button } from './ui/button';
+import { Bookmark } from 'lucide-react';
+import { Avatar, AvatarImage } from './ui/avatar';
+import { Badge } from './ui/badge';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { JOBSAVE_API_END_POINT } from '@/utils/constant';
 
-import React from 'react'
-import { Button } from './ui/button'
-import { Bookmark } from 'lucide-react'
-import { Avatar, AvatarImage } from './ui/avatar'
-import { Badge } from './ui/badge'
-import { useNavigate } from 'react-router-dom'
-
-const Job = ({ job }) => {
+const Job = ({ job, userId }) => {
     const navigate = useNavigate();
-    // const jobId = 'asdfghjdfghjgfdsadre76rtgf';
+    const [isSaved, setIsSaved] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const saveForLater = async () => {
+        // if (isSaved) return;
+        setLoading(true);
+
+        try {
+            const response = await axios.post(`${JOBSAVE_API_END_POINT}/saveJob`, {
+                userId,
+                jobId: job?._id,
+            });
+
+            if (response.data.success) {
+                setIsSaved(true);
+                alert('Job saved for later successfully!');
+            } else {
+                alert(response.data.message || 'Failed to save the job.');
+            }
+        } catch (error) {
+            console.error('Error saving job:', error);
+            alert('An error occurred while saving the job.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);
         const currentTime = new Date();
         const timeDifference = currentTime - createdAt;
         return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    }
+    };
+
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
             <div className='flex items-center justify-between'>
-                <p className='text-sm text-gray-500'>{daysAgoFunction(job?.createdAt) <= 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago`} </p>
+                <p className='text-sm text-gray-500'>
+                    {daysAgoFunction(job?.createdAt) <= 0
+                        ? 'Today'
+                        : `${daysAgoFunction(job?.createdAt)} days ago`}
+                </p>
                 <Button className="rounded-full" size="icon"><Bookmark /></Button>
             </div>
 
@@ -52,6 +84,6 @@ const Job = ({ job }) => {
             </div>
         </div>
     );
-}
+};
 
 export default Job;

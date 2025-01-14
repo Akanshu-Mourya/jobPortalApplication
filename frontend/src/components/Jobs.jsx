@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 
 const Jobs = () => {
     const { allJobs, searchedQuery } = useSelector(store => store.job);
+    const { user } = useSelector(store => store.auth);
     const [filterJobs, setFilterJobs] = useState(allJobs);
 
 
@@ -45,7 +46,7 @@ const Jobs = () => {
                                                 exit={{ opacity: 0, x: -100 }}
                                                 transition={{ duration: 0.3 }}
                                                 key={job?._id}>
-                                                <Job job={job} />
+                                                <Job job={job} userId={user?._id} />
                                             </motion.div>
                                         ))
                                     }

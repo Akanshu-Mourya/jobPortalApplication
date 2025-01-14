@@ -8,7 +8,6 @@ import companyRoute from "./routes/company.routes.js";
 import jobRoute from "./routes/job.routes.js";
 import applactionRoute from "./routes/application.routes.js";
 
-
 dotenv.config();
 
 const app = express();
@@ -40,6 +39,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applactionRoute);
+
 
 
 app.listen(PORT, () => {
